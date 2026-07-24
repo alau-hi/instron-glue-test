@@ -513,60 +513,78 @@
             color: var(--text-heading);
         }
 
-        .calc-grid {
+        .calc-grid-5col {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .input-group {
+        @media (max-width: 900px) {
+            .calc-grid-5col {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+        }
+
+        .slider-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 10px 12px;
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
-        .input-group label {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: var(--text-heading);
+        .slider-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            gap: 4px;
         }
 
-        .input-group label span {
-            color: var(--primary);
-            font-family: var(--font-mono);
-            font-weight: 700;
-        }
-
-        .input-control {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .input-group input[type="number"] {
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            font-family: var(--font-mono);
-            background: var(--bg-body);
+        .slider-header label {
+            font-size: 0.82rem;
+            font-weight: 600;
             color: var(--text-heading);
-            transition: border-color 0.2s ease;
+            white-space: nowrap;
         }
 
-        .input-group input[type="number"]:focus {
+        .num-input {
+            width: 62px;
+            padding: 3px 4px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-align: right;
+            background: var(--bg-surface);
+            color: var(--primary);
+        }
+
+        .num-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
         }
 
-        .input-group input[type="range"] {
+        .slider-bar {
             width: 100%;
             accent-color: var(--primary);
             cursor: pointer;
+        }
+
+        .visualizer-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .visualizer-grid-2col {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Results & Live Status Gauge */
@@ -1016,46 +1034,46 @@
                         </div>
                     </div>
 
-                    <!-- Input Controls Grid -->
-                    <div class="calc-grid">
-                        <div class="input-group">
-                            <label for="input-mor">Superwood MOR (MPa) <span id="val-mor">150</span></label>
-                            <div class="input-control">
-                                <input type="number" id="input-mor" value="150" min="20" max="250" step="5">
-                                <input type="range" id="range-mor" value="150" min="20" max="250" step="5">
+                    <!-- 5 Sliders in Single Row (Zero Duplicated Numbers) -->
+                    <div class="calc-grid-5col">
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <label for="input-mor">MOR (MPa)</label>
+                                <input type="number" id="input-mor" value="150" min="20" max="250" step="5" class="num-input">
                             </div>
+                            <input type="range" id="range-mor" value="150" min="20" max="250" step="5" class="slider-bar">
                         </div>
 
-                        <div class="input-group">
-                            <label for="input-t">Thickness t (mm) <span id="val-t">6.0</span></label>
-                            <div class="input-control">
-                                <input type="number" id="input-t" value="6.0" min="1.0" max="20.0" step="0.5">
-                                <input type="range" id="range-t" value="6.0" min="1.0" max="20.0" step="0.5">
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <label for="input-t">Thickness t (mm)</label>
+                                <input type="number" id="input-t" value="6.0" min="1.0" max="20.0" step="0.5" class="num-input">
                             </div>
+                            <input type="range" id="range-t" value="6.0" min="1.0" max="20.0" step="0.5" class="slider-bar">
                         </div>
 
-                        <div class="input-group">
-                            <label for="input-tau">Adhesive Strength τ (MPa) <span id="val-tau">15.0</span></label>
-                            <div class="input-control">
-                                <input type="number" id="input-tau" value="15.0" min="1.0" max="60.0" step="1.0">
-                                <input type="range" id="range-tau" value="15.0" min="1.0" max="60.0" step="1.0">
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <label for="input-tau">Strength τ (MPa)</label>
+                                <input type="number" id="input-tau" value="15.0" min="1.0" max="60.0" step="1.0" class="num-input">
                             </div>
+                            <input type="range" id="range-tau" value="15.0" min="1.0" max="60.0" step="1.0" class="slider-bar">
                         </div>
 
-                        <div class="input-group">
-                            <label for="input-l">Overlap Length L (mm) <span id="val-l">5.0</span></label>
-                            <div class="input-control">
-                                <input type="number" id="input-l" value="5.0" min="1.0" max="25.0" step="0.5">
-                                <input type="range" id="range-l" value="5.0" min="1.0" max="25.0" step="0.5">
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <label for="input-l">Overlap L (mm)</label>
+                                <input type="number" id="input-l" value="5.0" min="1.0" max="25.0" step="0.5" class="num-input">
                             </div>
+                            <input type="range" id="range-l" value="5.0" min="1.0" max="25.0" step="0.5" class="slider-bar">
                         </div>
 
-                        <div class="input-group">
-                            <label for="input-w">Specimen Width w (mm) <span id="val-w">20.0</span></label>
-                            <div class="input-control">
-                                <input type="number" id="input-w" value="20.0" min="5.0" max="50.0" step="1.0">
-                                <input type="range" id="range-w" value="20.0" min="5.0" max="50.0" step="1.0">
+                        <div class="slider-card">
+                            <div class="slider-header">
+                                <label for="input-w">Width w (mm)</label>
+                                <input type="number" id="input-w" value="20.0" min="5.0" max="50.0" step="1.0" class="num-input">
                             </div>
+                            <input type="range" id="range-w" value="20.0" min="5.0" max="50.0" step="1.0" class="slider-bar">
                         </div>
                     </div>
 
@@ -1077,25 +1095,27 @@
                         </div>
                     </div>
 
-                    <!-- Interactive 2D Canvas Geometry & Stress Visualizer -->
-                    <div class="visualizer-wrapper">
-                        <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; color: var(--text-heading);">
-                            Scaled 2D Specimen CAD Preview & Stress Concentration Vector Map
+                    <!-- Side-by-Side Visualizers (CAD + Chart) -->
+                    <div class="visualizer-grid-2col">
+                        <div class="visualizer-wrapper" style="margin-top: 0;">
+                            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; color: var(--text-heading);">
+                                2D Specimen CAD & Vector Preview
+                            </div>
+                            <div class="canvas-container" style="height: 180px;">
+                                <canvas id="specimen-canvas"></canvas>
+                            </div>
                         </div>
-                        <div class="canvas-container">
-                            <canvas id="specimen-canvas"></canvas>
-                        </div>
-                    </div>
 
-                    <!-- Simulated Force vs Extension Curve -->
-                    <div class="visualizer-wrapper" style="margin-top: 24px;">
-                        <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; color: var(--text-heading);">
-                            Simulated Instron Tensile Test Response (1.3 mm/min Rate)
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="instron-chart"></canvas>
+                        <div class="visualizer-wrapper" style="margin-top: 0;">
+                            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; color: var(--text-heading);">
+                                Simulated Tensile Load vs Extension (1.3 mm/min)
+                            </div>
+                            <div class="chart-container" style="height: 180px; margin-top: 0;">
+                                <canvas id="instron-chart"></canvas>
+                            </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </section>
         </main>
@@ -1115,23 +1135,18 @@
         // Input fields & sliders
         const morInput = document.getElementById('input-mor');
         const morRange = document.getElementById('range-mor');
-        const valMor = document.getElementById('val-mor');
 
         const tInput = document.getElementById('input-t');
         const tRange = document.getElementById('range-t');
-        const valT = document.getElementById('val-t');
 
         const tauInput = document.getElementById('input-tau');
         const tauRange = document.getElementById('range-tau');
-        const valTau = document.getElementById('val-tau');
 
         const lInput = document.getElementById('input-l');
         const lRange = document.getElementById('range-l');
-        const valL = document.getElementById('val-l');
 
         const wInput = document.getElementById('input-w');
         const wRange = document.getElementById('range-w');
-        const valW = document.getElementById('val-w');
 
         // Output fields
         const outLmax = document.getElementById('out-lmax');
@@ -1155,22 +1170,21 @@
         });
 
         // Sync inputs & ranges
-        function bindInputPair(input, range, display, formatter = (v) => v) {
+        function bindInputPair(input, range) {
             const update = (val) => {
                 input.value = val;
                 range.value = val;
-                display.textContent = formatter(val);
                 updateSimulation();
             };
             input.addEventListener('input', (e) => update(e.target.value));
             range.addEventListener('input', (e) => update(e.target.value));
         }
 
-        bindInputPair(morInput, morRange, valMor);
-        bindInputPair(tInput, tRange, valT, (v) => parseFloat(v).toFixed(1));
-        bindInputPair(tauInput, tauRange, valTau, (v) => parseFloat(v).toFixed(1));
-        bindInputPair(lInput, lRange, valL, (v) => parseFloat(v).toFixed(1));
-        bindInputPair(wInput, wRange, valW, (v) => parseFloat(v).toFixed(1));
+        bindInputPair(morInput, morRange);
+        bindInputPair(tInput, tRange);
+        bindInputPair(tauInput, tauRange);
+        bindInputPair(lInput, lRange);
+        bindInputPair(wInput, wRange);
 
         // Calculation & Simulation Engine
         function updateSimulation() {
