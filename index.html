@@ -513,61 +513,67 @@
             color: var(--text-heading);
         }
 
-        .calc-grid-5col {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        .slider-vertical-stack {
+            display: flex;
+            flex-direction: column;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             width: 100%;
-            box-sizing: border-box;
         }
 
-        .slider-card {
+        .control-row {
             background: var(--bg-subtle);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 10px 12px;
+            padding: 12px 16px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            min-width: 0;
-            box-sizing: border-box;
+            gap: 8px;
         }
 
-        .slider-header {
+        .control-label-group {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 4px;
-            width: 100%;
         }
 
-        .slider-header label {
-            font-size: 0.8rem;
+        .control-label-group label {
+            font-size: 0.92rem;
             font-weight: 600;
             color: var(--text-heading);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
-        .num-input {
-            width: 58px;
-            flex-shrink: 0;
-            padding: 2px 4px;
+        .control-val-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .num-input-lg {
+            width: 72px;
+            padding: 4px 8px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 700;
             text-align: right;
             background: var(--bg-surface);
             color: var(--primary);
         }
 
-        .num-input:focus {
+        .num-input-lg:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .unit-tag {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 32px;
         }
 
         .slider-bar {
@@ -1036,44 +1042,59 @@
                         </div>
                     </div>
 
-                    <!-- 5 Sliders in Single Row (Zero Duplicated Numbers) -->
-                    <div class="calc-grid-5col">
-                        <div class="slider-card">
-                            <div class="slider-header">
-                                <label for="input-mor">MOR (MPa)</label>
-                                <input type="number" id="input-mor" value="150" min="20" max="250" step="5" class="num-input">
+                    <!-- Parameter Controls (Vertical Stack with Explicit Unit Badges) -->
+                    <div class="slider-vertical-stack">
+                        <div class="control-row">
+                            <div class="control-label-group">
+                                <label for="input-mor">SUPERWOOD Modulus of Rupture (MOR)</label>
+                                <div class="control-val-wrapper">
+                                    <input type="number" id="input-mor" value="150" min="20" max="250" step="5" class="num-input-lg">
+                                    <span class="unit-tag">MPa</span>
+                                </div>
                             </div>
                             <input type="range" id="range-mor" value="150" min="20" max="250" step="5" class="slider-bar">
                         </div>
 
-                        <div class="slider-card">
-                            <div class="slider-header">
-                                <label for="input-t">Thickness t (mm)</label>
-                                <input type="number" id="input-t" value="6.0" min="1.0" max="20.0" step="0.5" class="num-input">
+                        <div class="control-row">
+                            <div class="control-label-group">
+                                <label for="input-t">Substrate Thickness (t)</label>
+                                <div class="control-val-wrapper">
+                                    <input type="number" id="input-t" value="6.0" min="1.0" max="20.0" step="0.5" class="num-input-lg">
+                                    <span class="unit-tag">mm</span>
+                                </div>
                             </div>
                             <input type="range" id="range-t" value="6.0" min="1.0" max="20.0" step="0.5" class="slider-bar">
                         </div>
 
-                        <div class="slider-card">
-                            <div class="slider-header">
-                                <label for="input-tau">Strength τ (MPa)</label>
-                                <input type="number" id="input-tau" value="15.0" min="1.0" max="60.0" step="1.0" class="num-input">
+                        <div class="control-row">
+                            <div class="control-label-group">
+                                <label for="input-tau">Adhesive Shear Strength (τ)</label>
+                                <div class="control-val-wrapper">
+                                    <input type="number" id="input-tau" value="15.0" min="1.0" max="60.0" step="1.0" class="num-input-lg">
+                                    <span class="unit-tag">MPa</span>
+                                </div>
                             </div>
                             <input type="range" id="range-tau" value="15.0" min="1.0" max="60.0" step="1.0" class="slider-bar">
                         </div>
 
-                        <div class="slider-card">
-                            <div class="slider-header">
-                                <label for="input-l">Overlap L (mm)</label>
-                                <input type="number" id="input-l" value="5.0" min="1.0" max="25.0" step="0.5" class="num-input">
+                        <div class="control-row">
+                            <div class="control-label-group">
+                                <label for="input-l">Joint Overlap Length (L)</label>
+                                <div class="control-val-wrapper">
+                                    <input type="number" id="input-l" value="5.0" min="1.0" max="25.0" step="0.5" class="num-input-lg">
+                                    <span class="unit-tag">mm</span>
+                                </div>
                             </div>
                             <input type="range" id="range-l" value="5.0" min="1.0" max="25.0" step="0.5" class="slider-bar">
                         </div>
 
-                        <div class="slider-card">
-                            <div class="slider-header">
-                                <label for="input-w">Width w (mm)</label>
-                                <input type="number" id="input-w" value="20.0" min="5.0" max="50.0" step="1.0" class="num-input">
+                        <div class="control-row">
+                            <div class="control-label-group">
+                                <label for="input-w">Specimen Coupon Width (w)</label>
+                                <div class="control-val-wrapper">
+                                    <input type="number" id="input-w" value="20.0" min="5.0" max="50.0" step="1.0" class="num-input-lg">
+                                    <span class="unit-tag">mm</span>
+                                </div>
                             </div>
                             <input type="range" id="range-w" value="20.0" min="5.0" max="50.0" step="1.0" class="slider-bar">
                         </div>
