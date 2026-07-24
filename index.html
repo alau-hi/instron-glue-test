@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUPERWOOD Lap Shear Test Design | Interactive Technical Suite</title>
+    <title>SUPERWOOD Lap Shear Studio — Test Design</title>
     <meta name="description" content="Methodology, dimensioning calculator, and Instron test setup for high-strength adhesive bonded on SUPERWOOD substrates (ASTM D1002 / D2339).">
     
     <!-- Modern Typography -->
@@ -218,9 +218,9 @@
             height: calc(100vh - var(--header-height));
             position: fixed;
             top: var(--header-height);
-            left: 0;
+            right: 0;
             background-color: var(--bg-surface);
-            border-right: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
             padding: 24px 16px;
             overflow-y: auto;
             z-index: 100;
@@ -264,7 +264,7 @@
             color: var(--primary);
             font-weight: 600;
             border-color: var(--primary-border);
-            transform: translateX(4px);
+            transform: translateX(-4px);
             box-shadow: var(--shadow-sm);
         }
 
@@ -285,7 +285,7 @@
 
         /* Main Content */
         .content {
-            margin-left: var(--sidebar-width);
+            margin-right: var(--sidebar-width);
             padding: 40px 60px;
             max-width: 1100px;
             width: 100%;
@@ -604,33 +604,29 @@
             gap: 10px;
         }
 
-        .studio-results-strip {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+        .studio-results {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .res-compact-card {
+        .res-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
             background: var(--bg-subtle);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 8px 10px;
-            text-align: center;
+            padding: 6px 12px;
+            font-size: 0.88rem;
         }
 
-        .res-compact-card .res-lbl {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            letter-spacing: 0.3px;
-        }
-
-        .res-compact-card .res-val {
+        .res-row strong {
             font-family: var(--font-mono);
-            font-size: 1.15rem;
             font-weight: 700;
             color: var(--primary);
+            white-space: nowrap;
         }
 
         .slider-bar {
@@ -762,21 +758,8 @@
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             padding: 20px;
-            cursor: pointer;
-            transition: all 0.25 ease;
             position: relative;
             overflow: hidden;
-        }
-
-        .failure-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-
-        .failure-card.active {
-            border-color: var(--primary);
-            background: var(--primary-light);
         }
 
         .failure-icon {
@@ -816,22 +799,25 @@
 
         /* Print Styles */
         @media print {
-            .sidebar, .top-header, .btn-icon, .btn-primary { display: none !important; }
+            .sidebar, .top-header, .btn-icon, .btn-primary, #studio { display: none !important; }
             .content { margin-left: 0 !important; padding: 0 !important; max-width: 100% !important; }
             body { background: #ffffff !important; color: #000000 !important; }
             .calc-studio, .callout, .sequence-step { break-inside: avoid; border: 1px solid #ccc !important; }
         }
 
         /* Responsive Breakpoints */
+        .nav-toggle { display: none; }
         @media (max-width: 900px) {
             .sidebar {
-                transform: translateX(-100%);
+                transform: translateX(100%);
             }
             .sidebar.mobile-open {
                 transform: translateX(0);
+                box-shadow: var(--shadow-lg);
             }
+            .nav-toggle { display: inline-flex; }
             .content {
-                margin-left: 0;
+                margin-right: 0;
                 padding: 24px 20px;
             }
             .grid-2col, .results-panel {
@@ -851,28 +837,25 @@
                 <path d="M12 6v12" />
             </svg>
             SUPERWOOD Lap Shear Studio
-            <span class="brand-badge">SUPERWOOD • ASTM D1002</span>
+            <span class="brand-badge">ASTM D1002 / D2339</span>
         </div>
         <div class="header-actions">
-            <button class="btn-icon" id="theme-toggle" title="Toggle Light/Dark Theme">
-                <span id="theme-icon">🌙</span> Dark Mode
-            </button>
-            <button class="btn-primary" onclick="window.print()">
-                📄 Export Report
-            </button>
+            <button class="btn-icon" id="theme-toggle" title="Toggle light/dark theme">Dark mode</button>
+            <button class="btn-primary" onclick="window.print()">Print report</button>
+            <button class="btn-icon nav-toggle" id="nav-toggle" aria-label="Toggle navigation">Sections</button>
         </div>
     </header>
 
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
-            <div class="sidebar-nav-title">Navigation (Press 1 - 5)</div>
+            <div class="sidebar-nav-title">Sections · press 1–5 or ←/→</div>
             <ul>
-                <li><a href="#dimensions" class="nav-link active"><span class="step-num">1</span> Specimen Dimensions</a></li>
-                <li><a href="#setup" class="nav-link"><span class="step-num">2</span> Instron Setup</a></li>
-                <li><a href="#testing" class="nav-link"><span class="step-num">3</span> Running the Test</a></li>
-                <li><a href="#logic" class="nav-link"><span class="step-num">4</span> Mechanics & Logic</a></li>
-                <li><a href="#studio" class="nav-link"><span class="step-num">5</span> Live Simulation Studio</a></li>
+                <li><a href="#dimensions" class="nav-link active">Dimensions <span class="step-num">1</span></a></li>
+                <li><a href="#setup" class="nav-link">Setup <span class="step-num">2</span></a></li>
+                <li><a href="#testing" class="nav-link">Protocol <span class="step-num">3</span></a></li>
+                <li><a href="#logic" class="nav-link">Mechanics <span class="step-num">4</span></a></li>
+                <li><a href="#studio" class="nav-link">Studio <span class="step-num">5</span></a></li>
             </ul>
         </nav>
 
@@ -880,15 +863,15 @@
         <main class="content">
             <div class="page-header">
                 <h1>Standard SUPERWOOD Lap Shear Test Design</h1>
-                <div class="subtitle">Methodology, Mechanics & Interactive Dimensioning for High-Strength Adhesive on SUPERWOOD Substrates</div>
+                <div class="subtitle">Methodology, mechanics, and interactive dimensioning for high-strength adhesive on SUPERWOOD substrates</div>
             </div>
 
             <!-- Section 1: Specimen Dimensions -->
             <section id="dimensions">
                 <h2>1. Calculating Specimen Dimensions for SUPERWOOD</h2>
-                <p>To ensure the glue line shears cleanly before the SUPERWOOD substrate suffers catastrophic tensile failure, the shear force required to break the adhesive ($\mathbf{F_{\text{glue}}}$) must induce a total stress in the SUPERWOOD (tension + eccentricity bending) that stays safely below SUPERWOOD's <strong>150 MPa Modulus of Rupture (MOR)</strong>.</p>
-                
-                <p>We calculate this balancing act using the maximum normal stress equation for single-overlap lap joints under axial tension:</p>
+                <p>To ensure the glue line shears cleanly before the SUPERWOOD substrate fails, the force required to break the adhesive ($\mathbf{F_{\text{glue}}}$) must induce a combined stress in the SUPERWOOD (membrane tension plus eccentricity bending) that stays safely below SUPERWOOD's <strong>150 MPa Modulus of Rupture (MOR)</strong>. MOR is a flexural strength; it is the appropriate substrate limit here because the offset joint loads each adherend in combined tension and bending.</p>
+
+                <p>The peak substrate stress follows from the rigid-adherend approximation for a single-lap joint under axial tension (bending-moment factor $k \approx 1$, so the bending term is three times the membrane term):</p>
                 
                 <div class="formula-card">
                     <div class="formula-display">
@@ -899,7 +882,7 @@
                     </p>
                 </div>
 
-                <p>To maintain $\sigma_{\text{wood}}$ safely below 150 MPa while generating sufficient force to shear the <strong>15 MPa adhesive</strong>, use these engineered dimensions:</p>
+                <p>To maintain $\sigma_{\text{wood}}$ safely below 150 MPa while generating sufficient force to shear the <strong>15 MPa adhesive</strong>, use these dimensions:</p>
                 
                 <div class="grid-2col">
                     <div class="sequence-step">
@@ -927,22 +910,50 @@
                 <div class="callout">
                     <div class="callout-title">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-                        SUPERWOOD Math Check Verification:
+                        Worked check
                     </div>
                     <ul>
                         <li><strong>Glue Failure Load ($F_{\text{glue}}$):</strong> $15\text{ MPa} \times (20\text{ mm} \times 5\text{ mm}) = \mathbf{1,500\text{ N (1.5 kN)}}$.</li>
                         <li><strong>Peak SUPERWOOD Tensile Stress ($\sigma_{\text{wood}}$):</strong> $\frac{4 \times 1500\text{ N}}{20\text{ mm} \times 6\text{ mm}} = \mathbf{50.0\text{ MPa}}$.</li>
-                        <li><em>Result:</em> The adhesive shears cleanly at $1.5\text{ kN}$, while the SUPERWOOD experiences only $50.0\text{ MPa}$ of peak stress—safely below its $150\text{ MPa}$ ultimate MOR threshold.</li>
+                        <li><em>Result:</em> The adhesive shears at $1.5\text{ kN}$ while the SUPERWOOD sees a peak stress of $50.0\text{ MPa}$ — a third of its $150\text{ MPa}$ MOR.</li>
                     </ul>
                 </div>
 
                 <div class="figure-card">
-                    <div class="figure-img-container">
-                        <img src="https://www.researchgate.net/profile/Sivakumar-Dhar-Malingam/publication/335569072/figure/fig1/AS:798863975788545@1567475422904/Specimen-during-the-lap-shear-test-28.png" 
-                             alt="Lap shear test specimen geometry diagram showing overlap area and alignment shims"
-                             onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\'padding:40px; color:var(--text-muted);\'><svg width=\'64\' height=\'64\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'2\' y=\'8\' width=\'20\' height=\'8\' rx=\'2\'/><path d=\'M6 12h12\'/></svg><p style=\'margin-top:10px;\'>Single Lap Joint Schematic: 6mm Superwood Substrate + 5mm Overlap Line</p></div>';">
+                    <div class="figure-img-container" style="padding: 16px;">
+                        <svg viewBox="0 0 660 200" width="100%" style="max-width: 640px;" role="img" aria-label="Side view of single lap shear joint: two 100 mm coupons, 5 mm overlap, 6 mm thickness, end shims, opposing tensile forces">
+                            <!-- top adherend -->
+                            <rect x="90" y="72" width="270" height="26" rx="2" fill="var(--primary)" opacity="0.85"/>
+                            <!-- bottom adherend -->
+                            <rect x="330" y="102" width="270" height="26" rx="2" fill="var(--primary)" opacity="0.6"/>
+                            <!-- glue line -->
+                            <rect x="330" y="98" width="30" height="4" fill="#22c55e"/>
+                            <!-- shims -->
+                            <rect x="90" y="102" width="60" height="26" rx="2" fill="var(--text-muted)" opacity="0.5"/>
+                            <rect x="540" y="72" width="60" height="26" rx="2" fill="var(--text-muted)" opacity="0.5"/>
+                            <!-- force arrows -->
+                            <g stroke="var(--primary)" stroke-width="3" fill="var(--primary)">
+                                <line x1="82" y1="98" x2="30" y2="98"/><path d="M30 98 l10 -5 v10 z"/>
+                                <line x1="608" y1="102" x2="660" y2="102"/><path d="M660 102 l-10 -5 v10 z"/>
+                            </g>
+                            <!-- dimension: overlap -->
+                            <g stroke="var(--text-muted)" stroke-width="1" fill="none">
+                                <line x1="330" y1="60" x2="330" y2="70"/><line x1="360" y1="60" x2="360" y2="70"/><line x1="330" y1="63" x2="360" y2="63"/>
+                                <line x1="612" y1="72" x2="622" y2="72"/><line x1="612" y1="98" x2="622" y2="98"/><line x1="618" y1="72" x2="618" y2="98"/>
+                            </g>
+                            <g font-family="Inter, sans-serif" font-size="12" fill="var(--text-main)">
+                                <text x="318" y="52">L = 5 mm</text>
+                                <text x="626" y="89">t = 6 mm</text>
+                                <text x="190" y="62">Coupon 100 mm</text>
+                                <text x="420" y="148">Coupon 100 mm</text>
+                                <text x="94" y="148">Shim (6 mm scrap)</text>
+                                <text x="500" y="62" text-anchor="end"></text>
+                                <text x="30" y="82">F</text>
+                                <text x="648" y="126">F</text>
+                            </g>
+                        </svg>
                     </div>
-                    <figcaption>Figure 1: Single lap shear joint geometry featuring end shims to align the tensile loading axis and eliminate parasitic bending moments.</figcaption>
+                    <figcaption>Figure 1: Single lap shear joint, side view. End shims of substrate scrap align the tensile loading axis through the bondline and suppress parasitic bending.</figcaption>
                 </div>
             </section>
 
@@ -950,7 +961,7 @@
             <section id="setup">
                 <h2>2. Preparing the Instron Machine Setup</h2>
                 <p>Because single-overlap coupons have offset centerline axes, direct mounting in tension grips causes severe diagonal twisting under load, generating out-of-plane peel stress that fractures wood prematurely.</p>
-                <p>To eliminate eccentricity, insert <strong>6 mm thick shims (spacer blocks)</strong> in the upper and lower grips. Using scrap pieces of your 6 mm Superwood guarantees the shims will not compress under wedge clamping pressures ($E \approx 10\text{ GPa}$).</p>
+                <p>To eliminate eccentricity, insert <strong>6 mm thick shims (spacer blocks)</strong> in the upper and lower grips. Using scrap pieces of your 6 mm SUPERWOOD guarantees the shims will not compress under wedge clamping pressures ($E \approx 10\text{ GPa}$).</p>
 
                 <div class="sequence">
                     <div class="sequence-step">
@@ -966,7 +977,7 @@
                             <span class="step-title">Step 2: Prepare Alignment Shims</span>
                             <span class="step-subtitle">Must equal substrate thickness ($t = 6\text{ mm}$)</span>
                         </div>
-                        <p>Cut two $20\text{ mm} \times 40\text{ mm}$ pieces from scrap Superwood. These shims offset the grip jaws by exactly 6 mm, centering the bondline along the loading axis.</p>
+                        <p>Cut two $20\text{ mm} \times 40\text{ mm}$ pieces from scrap SUPERWOOD. These shims offset the grip jaws by exactly 6 mm, centering the bondline along the loading axis.</p>
                     </div>
 
                     <div class="sequence-step">
@@ -992,20 +1003,48 @@
                 </div>
 
                 <div class="figure-card">
-                    <div class="figure-img-container">
-                        <img src="https://www.instron.com/wp-content/uploads/2024/06/photo.jpg" 
-                             alt="Photograph of single lap shear coupon mounted in Instron mechanical wedge grips with shims"
-                             onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\'padding:40px; color:var(--text-muted);\'><svg width=\'64\' height=\'64\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><path d=\'M12 2v20M17 5H7M17 19H7\'/></svg><p style=\'margin-top:10px;\'>Instron Wedge Grip Mounting with Alignment Shims</p></div>';">
+                    <div class="figure-img-container" style="padding: 16px;">
+                        <svg viewBox="0 0 360 340" width="100%" style="max-width: 340px;" role="img" aria-label="Vertical mounting of lap shear specimen in Instron wedge grips: upper and lower grips each hold the specimen against a 6 mm shim so the bondline sits on the load axis">
+                            <!-- load axis centerline -->
+                            <line x1="180" y1="8" x2="180" y2="332" stroke="var(--text-muted)" stroke-width="1" stroke-dasharray="6 5" opacity="0.6"/>
+                            <!-- upper grip -->
+                            <rect x="120" y="20" width="120" height="18" rx="3" fill="var(--text-muted)" opacity="0.7"/>
+                            <path d="M132 38 L172 38 L172 92 L152 92 Z" fill="var(--text-muted)" opacity="0.55"/>
+                            <path d="M228 38 L188 38 L188 92 L208 92 Z" fill="var(--text-muted)" opacity="0.55"/>
+                            <!-- upper shim (left jaw face) -->
+                            <rect x="172" y="44" width="5" height="46" fill="#eab308"/>
+                            <!-- specimen: upper coupon right of axis, lower coupon left of axis -->
+                            <rect x="177" y="44" width="7" height="150" fill="var(--primary)"/>
+                            <rect x="170" y="146" width="7" height="150" fill="var(--primary)" opacity="0.7"/>
+                            <!-- glue overlap -->
+                            <rect x="176" y="146" width="2" height="48" fill="#22c55e"/>
+                            <!-- lower shim (right jaw face) -->
+                            <rect x="177" y="250" width="5" height="46" fill="#eab308"/>
+                            <!-- lower grip -->
+                            <path d="M132 302 L172 302 L152 248 L132 248 Z" fill="var(--text-muted)" opacity="0.55"/>
+                            <path d="M228 302 L188 302 L208 248 L228 248 Z" fill="var(--text-muted)" opacity="0.55"/>
+                            <rect x="120" y="302" width="120" height="18" rx="3" fill="var(--text-muted)" opacity="0.7"/>
+                            <g font-family="Inter, sans-serif" font-size="12" fill="var(--text-main)">
+                                <text x="248" y="34">Upper wedge grip</text>
+                                <text x="248" y="70">6 mm shim</text>
+                                <text x="14" y="174">5 mm overlap</text>
+                                <text x="248" y="278">6 mm shim</text>
+                                <text x="248" y="316">Lower wedge grip</text>
+                                <text x="188" y="18">Load axis</text>
+                            </g>
+                            <line x1="112" y1="170" x2="172" y2="170" stroke="var(--text-muted)" stroke-width="1"/>
+                        </svg>
                     </div>
-                    <figcaption>Figure 2: Instron universal testing machine mechanical wedge grips setup demonstrating true vertical axial alignment achieved with end shims.</figcaption>
+                    <figcaption>Figure 2: Grip mounting, front view. A shim on the opposite jaw face at each end offsets the jaws by the substrate thickness, centering the bondline on the machine's load axis.</figcaption>
                 </div>
             </section>
 
             <!-- Section 3: Running the Test -->
             <section id="testing">
                 <h2>3. Executing the Test Protocol</h2>
+                <p>The protocol follows ASTM D1002 conventions for single-lap shear; ASTM D2339 is the corresponding standard for wood substrates and governs the failure-mode inspection below.</p>
                 <ol>
-                    <li><strong>Quasi-Static Displacement Rate:</strong> Set crosshead speed to <strong>1.30 mm/min</strong> ($0.05\text{ in/min}$) per ASTM D1002 standard. This quasi-static velocity isolates pure shear behavior without dynamic rate-hardening shocks.</li>
+                    <li><strong>Quasi-Static Displacement Rate:</strong> Set crosshead speed to <strong>1.27 mm/min</strong> ($0.05\text{ in/min}$) per ASTM D1002. This quasi-static rate avoids strain-rate effects in both adhesive and substrate.</li>
                     <li><strong>Data Acquisition Rate:</strong> Sample Force (N) and Crosshead Extension (mm) at a minimum frequency of <strong>50 Hz</strong>.</li>
                     <li><strong>Shear Strength Calculation:</strong> Compute ultimate apparent shear strength ($\tau_{\text{app}}$) by dividing peak load ($F_{\text{peak}}$) by measured bond area ($A = w \cdot L$):
                         $$\tau_{\text{app}} = \frac{F_{\text{peak}}}{w \cdot L}$$
@@ -1018,7 +1057,7 @@
                         Failure Mode Classification (Post-Test Inspection):
                     </div>
                     <div class="failure-grid" id="failure-modes">
-                        <div class="failure-card active" onclick="selectFailureMode('cohesive-wood', this)">
+                        <div class="failure-card">
                             <div class="failure-icon">
                                 <svg width="80" height="40" viewBox="0 0 100 50">
                                     <rect x="10" y="15" width="40" height="20" fill="#cbd5e1"/>
@@ -1030,7 +1069,7 @@
                             <div class="failure-desc">Substrate wood fibers tear out before adhesive fails. Indicates adhesive bond strength exceeds substrate shear capability.</div>
                         </div>
 
-                        <div class="failure-card" onclick="selectFailureMode('adhesive-interfacial', this)">
+                        <div class="failure-card">
                             <div class="failure-icon">
                                 <svg width="80" height="40" viewBox="0 0 100 50">
                                     <rect x="10" y="15" width="40" height="20" fill="#cbd5e1"/>
@@ -1042,7 +1081,7 @@
                             <div class="failure-desc">Clean detachment at the wood-adhesive interface. Points to inadequate surface preparation or contamination.</div>
                         </div>
 
-                        <div class="failure-card" onclick="selectFailureMode('cohesive-adhesive', this)">
+                        <div class="failure-card">
                             <div class="failure-icon">
                                 <svg width="80" height="40" viewBox="0 0 100 50">
                                     <rect x="10" y="15" width="38" height="20" fill="#cbd5e1"/>
@@ -1061,11 +1100,11 @@
             <!-- Section 4: Design Logic & Mechanics -->
             <section id="logic">
                 <h2>4. Design Logic & Analytical Mechanics</h2>
-                <p>Single lap joints experience complex combination stresses: axial shear $\tau_{xy}$, transverse peel $\sigma_y$, and eccentric bending moments $M_0$. This section details the mathematical cancellation proof explaining our specimen dimension choices.</p>
+                <p>Single lap joints carry a combination of stresses: axial shear $\tau_{xy}$, transverse peel $\sigma_y$, and an eccentric bending moment $M_0$. This section shows the substitution behind the dimension choices.</p>
 
                 <div class="callout callout-purple">
-                    <div class="callout-title">The Width Cancellation Theorem</div>
-                    <p>It is often assumed that reducing specimen width ($w$) allows increasing overlap length ($L$). However, mathematically $w$ cancels out entirely from substrate normal stress!</p>
+                    <div class="callout-title">Why width cancels out</div>
+                    <p>It is tempting to assume that reducing specimen width ($w$) allows a longer overlap ($L$). But $w$ cancels out of the substrate normal stress entirely.</p>
                     
                     <p>Breakdown of equations:</p>
                     <ul>
@@ -1076,13 +1115,13 @@
                     <div class="formula-card">
                         $$\sigma_{\text{wood}} = \frac{4 \cdot (\tau_{\text{glue}} \cdot w \cdot L)}{w \cdot t} \implies \sigma_{\text{wood}} = \frac{4 \cdot \tau_{\text{glue}} \cdot L}{t}$$
                     </div>
-                    <p><strong>Key Engineering Insight:</strong> Substrate bending stress depends <em>solely</em> on the ratio of Overlap Length to Substrate Thickness ($\frac{L}{t}$). Specimen width ($w$) only scales the total machine force required, not internal stress!</p>
+                    <p><strong>Key insight:</strong> substrate bending stress depends solely on the ratio of overlap length to substrate thickness ($\frac{L}{t}$). Width ($w$) only scales the total machine force required, not the internal stress.</p>
                 </div>
 
                 <h3>Why 20.0 mm Width is Optimal</h3>
                 <ul>
                     <li><strong>Edge Effect Isolation:</strong> Narrower coupons ($< 10\text{ mm}$) amplify edge defects and glue squeeze-out fillet artifacts, causing data scatter. 20 mm yields a uniform center stress field.</li>
-                    <li><strong>Load Cell Optimization:</strong> A $20\text{ mm} \times 5\text{ mm}$ overlap at $15\text{ MPa}$ shear yields $1.5\text{ kN}$ load—operating in the sweet spot ($30\%$) of standard $5.0\text{ kN}$ Instron load cells.</li>
+                    <li><strong>Load Cell Optimization:</strong> A $20\text{ mm} \times 5\text{ mm}$ overlap at $15\text{ MPa}$ shear yields $1.5\text{ kN}$ load—about $30\%$ of a standard $5.0\text{ kN}$ Instron load cell, comfortably within its accurate range.</li>
                 </ul>
             </section>
 
@@ -1156,25 +1195,17 @@
 
                         <!-- RIGHT PANEL: Output Results & Side-by-Side Visualizers -->
                         <div class="studio-right-panel">
-                            <!-- Output Results Strip -->
-                            <div class="studio-results-strip">
-                                <div class="res-compact-card">
-                                    <div class="res-lbl">Max Overlap (L_max)</div>
-                                    <div class="res-val" id="out-lmax">15.00 mm</div>
-                                </div>
-                                <div class="res-compact-card">
-                                    <div class="res-lbl">Glue Force (F_glue)</div>
-                                    <div class="res-val" id="out-force">1.50 kN</div>
-                                </div>
-                                <div class="res-compact-card">
-                                    <div class="res-lbl">Wood Stress (σ_wood)</div>
-                                    <div class="res-val" id="out-stress">50.0 MPa</div>
-                                </div>
+                            <!-- Output Results -->
+                            <div class="studio-results">
+                                <div class="res-row"><span>Max safe overlap at these MOR, t, τ (L<sub>max</sub> = MOR·t / 4τ)</span><strong id="out-lmax">15.00 mm</strong></div>
+                                <div class="res-row"><span>Load at glue failure (F<sub>glue</sub> = τ·w·L)</span><strong id="out-force">1.50 kN</strong></div>
+                                <div class="res-row"><span>Peak substrate stress (σ<sub>wood</sub> = 4τL/t)</span><strong id="out-stress">50.0 MPa</strong></div>
                             </div>
 
-                            <div id="safety-badge" class="status-badge status-pass" style="margin-bottom: 4px;">
-                                ✓ SAFE: SUPERWOOD Stress (50.0 MPa) < 80% MOR (150 MPa)
+                            <div id="safety-badge" class="status-badge status-pass" style="margin-bottom: 0;">
+                                PASS — wood stress 50.0 MPa is below 80% of MOR (150 MPa)
                             </div>
+                            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">PASS requires σ<sub>wood</sub> under 80% of MOR — a 1.25× margin so the bond fails before the substrate does.</p>
 
                             <!-- Side-by-Side Visualizers (CAD + Chart) -->
                             <div class="visualizer-grid-2col" style="margin-top: 0;">
@@ -1189,7 +1220,7 @@
 
                                 <div class="visualizer-wrapper" style="margin-top: 0; padding: 10px;">
                                     <div style="font-weight: 700; font-size: 0.8rem; margin-bottom: 4px; color: var(--text-heading);">
-                                        Tensile Load vs Extension (1.3 mm/min)
+                                        Load vs extension — illustrative (1.27 mm/min)
                                     </div>
                                     <div class="chart-container" style="height: 155px; margin-top: 0;">
                                         <canvas id="instron-chart"></canvas>
@@ -1205,15 +1236,14 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2026 SUPERWOOD Lap Shear Engineering Studio • Standard Test Protocol per ASTM D1002 / D2339 Guidelines</p>
+        <p>© 2026 SUPERWOOD Lap Shear Studio • Test protocol per ASTM D1002 / D2339</p>
     </footer>
 
     <!-- Interactive Client Scripting -->
     <script>
         // DOM Elements
         const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        
+
         // Input fields & sliders
         const morInput = document.getElementById('input-mor');
         const morRange = document.getElementById('range-mor');
@@ -1241,25 +1271,32 @@
         const ctx = canvas.getContext('2d');
         let instronChart = null;
 
-        // Theme Toggle Logic
+        // Theme Toggle Logic (persisted; honors OS preference on first visit)
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            themeToggle.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+            localStorage.setItem('theme', theme);
+        }
+        setTheme(localStorage.getItem('theme') ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
         themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-            themeToggle.childNodes[1].textContent = newTheme === 'dark' ? ' Light Mode' : ' Dark Mode';
+            setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
             updateSimulation();
         });
 
-        // Sync inputs & ranges
+        // Mobile navigation toggle
+        const sidebar = document.getElementById('sidebar');
+        document.getElementById('nav-toggle').addEventListener('click', () => {
+            sidebar.classList.toggle('mobile-open');
+        });
+        sidebar.querySelectorAll('a').forEach(a =>
+            a.addEventListener('click', () => sidebar.classList.remove('mobile-open')));
+
+        // Sync inputs & ranges (write only to the paired control, never back into the one being edited)
         function bindInputPair(input, range) {
-            const update = (val) => {
-                input.value = val;
-                range.value = val;
-                updateSimulation();
-            };
-            input.addEventListener('input', (e) => update(e.target.value));
-            range.addEventListener('input', (e) => update(e.target.value));
+            input.addEventListener('input', () => { range.value = input.value; updateSimulation(); });
+            range.addEventListener('input', () => { input.value = range.value; updateSimulation(); });
         }
 
         bindInputPair(morInput, morRange);
@@ -1294,13 +1331,13 @@
             // Safety Badge logic
             if (sigma_wood < mor * 0.8) {
                 safetyBadge.className = 'status-badge status-pass';
-                safetyBadge.innerHTML = `✓ SAFE: Wood Stress (${sigma_wood.toFixed(1)} MPa) < 80% MOR`;
+                safetyBadge.textContent = `PASS — wood stress ${sigma_wood.toFixed(1)} MPa is below 80% of MOR (${mor} MPa)`;
             } else if (sigma_wood <= mor) {
                 safetyBadge.className = 'status-badge status-warn';
-                safetyBadge.innerHTML = `⚠️ WARNING: High Wood Stress (${sigma_wood.toFixed(1)} MPa) near MOR (${mor} MPa)`;
+                safetyBadge.textContent = `CAUTION — wood stress ${sigma_wood.toFixed(1)} MPa is within 20% of MOR (${mor} MPa)`;
             } else {
                 safetyBadge.className = 'status-badge status-fail';
-                safetyBadge.innerHTML = `❌ FAILURE: Wood Breaks First (${sigma_wood.toFixed(1)} MPa > MOR ${mor} MPa)`;
+                safetyBadge.textContent = `FAIL — wood breaks first: ${sigma_wood.toFixed(1)} MPa exceeds MOR (${mor} MPa)`;
             }
 
             drawSpecimenCAD(t, L, w, sigma_wood, mor);
@@ -1384,10 +1421,10 @@
             instronChart = new Chart(ctxChart, {
                 type: 'line',
                 data: {
-                    labels: [0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.3],
+                    labels: [],
                     datasets: [{
-                        label: 'Simulated Force (kN)',
-                        data: [0, 0.3, 0.7, 1.1, 1.5, 1.8, 2.0, 0],
+                        label: 'Illustrative curve (linear idealization)',
+                        data: [],
                         borderColor: '#0284c7',
                         backgroundColor: 'rgba(2, 132, 199, 0.1)',
                         fill: true,
@@ -1436,62 +1473,53 @@
             instronChart.data.labels = labels;
             instronChart.data.datasets[0].data = data;
             instronChart.data.datasets[0].borderColor = isWoodFailure ? '#ef4444' : '#0284c7';
-            instronChart.data.datasets[0].label = isWoodFailure ? 'Wood Fracture Load (kN)' : 'Shear Failure Force (kN)';
+            instronChart.data.datasets[0].label = isWoodFailure
+                ? 'Illustrative curve — wood fracture'
+                : 'Illustrative curve (linear idealization)';
             instronChart.update();
         }
 
-        function selectFailureMode(modeId, element) {
-            document.querySelectorAll('.failure-card').forEach(card => card.classList.remove('active'));
-            element.classList.add('active');
+        // Section navigation: number keys jump, arrow keys step, scroll spy highlights
+        const sectionIds = ['dimensions', 'setup', 'testing', 'logic', 'studio'];
+
+        function updateScrollSpy() {
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            const probe = window.scrollY + window.innerHeight * 0.35;
+            let idx = 0;
+            sectionIds.forEach((id, i) => {
+                if (document.getElementById(id).offsetTop <= probe) idx = i;
+            });
+            // Edge handling: pin first section at the very top, last at the very bottom
+            if (window.scrollY < 10) idx = 0;
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10) {
+                idx = sectionIds.length - 1;
+            }
+            navLinks.forEach((link, i) => link.classList.toggle('active', i === idx));
+            return idx;
         }
 
-        // Keyboard Shortcut Navigation (Press 1 - 5 to jump to sections)
         document.addEventListener('keydown', (e) => {
             const active = document.activeElement;
             if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) {
                 return;
             }
-            const sectionMap = {
-                '1': 'dimensions',
-                '2': 'setup',
-                '3': 'testing',
-                '4': 'logic',
-                '5': 'studio'
-            };
-            if (sectionMap[e.key]) {
-                const target = document.getElementById(sectionMap[e.key]);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+            let targetIdx = null;
+            if (/^[1-5]$/.test(e.key)) {
+                targetIdx = parseInt(e.key, 10) - 1;
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const current = updateScrollSpy();
+                targetIdx = e.key === 'ArrowRight'
+                    ? Math.min(current + 1, sectionIds.length - 1)
+                    : Math.max(current - 1, 0);
+            }
+            if (targetIdx !== null) {
+                document.getElementById(sectionIds[targetIdx]).scrollIntoView({ behavior: 'smooth' });
             }
         });
 
-        // Intersection Observer for Active Sidebar Highlight & Scroll Spy
         function initScrollSpy() {
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '-15% 0px -55% 0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => observer.observe(section));
+            window.addEventListener('scroll', updateScrollSpy, { passive: true });
+            updateScrollSpy();
         }
 
         // Initialize KaTeX & Interactivity on DOM Load
