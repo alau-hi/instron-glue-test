@@ -783,13 +783,13 @@
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
-            <div class="sidebar-nav-title">Navigation Index</div>
+            <div class="sidebar-nav-title">Navigation (Press 1 - 5)</div>
             <ul>
-                <li><a href="#dimensions" class="nav-link active"><span class="step-num">01</span> 1. Specimen Dimensions</a></li>
-                <li><a href="#setup" class="nav-link"><span class="step-num">02</span> 2. Instron Setup</a></li>
-                <li><a href="#testing" class="nav-link"><span class="step-num">03</span> 3. Running the Test</a></li>
-                <li><a href="#logic" class="nav-link"><span class="step-num">04</span> 4. Mechanics & Logic</a></li>
-                <li><a href="#studio" class="nav-link"><span class="step-num">05</span> 5. Live Simulation Studio</a></li>
+                <li><a href="#dimensions" class="nav-link active"><span class="step-num">1</span> Specimen Dimensions</a></li>
+                <li><a href="#setup" class="nav-link"><span class="step-num">2</span> Instron Setup</a></li>
+                <li><a href="#testing" class="nav-link"><span class="step-num">3</span> Running the Test</a></li>
+                <li><a href="#logic" class="nav-link"><span class="step-num">4</span> Mechanics & Logic</a></li>
+                <li><a href="#studio" class="nav-link"><span class="step-num">5</span> Live Simulation Studio</a></li>
             </ul>
         </nav>
 
@@ -1348,6 +1348,27 @@
             document.querySelectorAll('.failure-card').forEach(card => card.classList.remove('active'));
             element.classList.add('active');
         }
+
+        // Keyboard Shortcut Navigation (Press 1 - 5 to jump to sections)
+        document.addEventListener('keydown', (e) => {
+            const active = document.activeElement;
+            if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) {
+                return;
+            }
+            const sectionMap = {
+                '1': 'dimensions',
+                '2': 'setup',
+                '3': 'testing',
+                '4': 'logic',
+                '5': 'studio'
+            };
+            if (sectionMap[e.key]) {
+                const target = document.getElementById(sectionMap[e.key]);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
 
         // Initialize KaTeX & Interactivity on DOM Load
         document.addEventListener('DOMContentLoaded', () => {
