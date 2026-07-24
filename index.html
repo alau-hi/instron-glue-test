@@ -803,7 +803,7 @@
             <!-- Section 1: Specimen Dimensions -->
             <section id="dimensions">
                 <h2>1. Calculating Specimen Dimensions</h2>
-                <p>To ensure the glue line shears cleanly before the wooden substrate suffers catastrophic tensile failure, the shear force required to break the adhesive ($\mathbf{F_{\text{glue}}}$) must induce a total stress in the wood (tension + eccentricity bending) that stays safely below the wood's <strong>100 MPa Modulus of Rupture (MOR)</strong>.</p>
+                <p>To ensure the glue line shears cleanly before the wooden substrate suffers catastrophic tensile failure, the shear force required to break the adhesive ($\mathbf{F_{\text{glue}}}$) must induce a total stress in the wood (tension + eccentricity bending) that stays safely below the wood's <strong>150 MPa Modulus of Rupture (MOR)</strong>.</p>
                 
                 <p>We calculate this balancing act using the maximum normal stress equation for single-overlap lap joints under axial tension:</p>
                 
@@ -816,7 +816,7 @@
                     </p>
                 </div>
 
-                <p>To maintain $\sigma_{\text{wood}}$ safely below 100 MPa while generating sufficient force to shear the <strong>20 MPa adhesive</strong>, use these engineered dimensions:</p>
+                <p>To maintain $\sigma_{\text{wood}}$ safely below 150 MPa while generating sufficient force to shear the <strong>15 MPa adhesive</strong>, use these engineered dimensions:</p>
                 
                 <div class="grid-2col">
                     <div class="sequence-step">
@@ -847,9 +847,9 @@
                         The Math Check Verification:
                     </div>
                     <ul>
-                        <li><strong>Glue Failure Load ($F_{\text{glue}}$):</strong> $20\text{ MPa} \times (20\text{ mm} \times 5\text{ mm}) = \mathbf{2,000\text{ N (2.0 kN)}}$.</li>
-                        <li><strong>Peak Wood Tensile Stress ($\sigma_{\text{wood}}$):</strong> $\frac{4 \times 2000\text{ N}}{20\text{ mm} \times 6\text{ mm}} = \mathbf{66.7\text{ MPa}}$.</li>
-                        <li><em>Result:</em> The adhesive shears cleanly at $2.0\text{ kN}$, while the wood experiences $66.7\text{ MPa}$ of peak stress—safely below its $100\text{ MPa}$ ultimate MOR threshold.</li>
+                        <li><strong>Glue Failure Load ($F_{\text{glue}}$):</strong> $15\text{ MPa} \times (20\text{ mm} \times 5\text{ mm}) = \mathbf{1,500\text{ N (1.5 kN)}}$.</li>
+                        <li><strong>Peak Wood Tensile Stress ($\sigma_{\text{wood}}$):</strong> $\frac{4 \times 1500\text{ N}}{20\text{ mm} \times 6\text{ mm}} = \mathbf{50.0\text{ MPa}}$.</li>
+                        <li><em>Result:</em> The adhesive shears cleanly at $1.5\text{ kN}$, while the wood experiences $50.0\text{ MPa}$ of peak stress—safely below its $150\text{ MPa}$ ultimate MOR threshold.</li>
                     </ul>
                 </div>
 
@@ -999,7 +999,7 @@
                 <h3>Why 20.0 mm Width is Optimal</h3>
                 <ul>
                     <li><strong>Edge Effect Isolation:</strong> Narrower coupons ($< 10\text{ mm}$) amplify edge defects and glue squeeze-out fillet artifacts, causing data scatter. 20 mm yields a uniform center stress field.</li>
-                    <li><strong>Load Cell Optimization:</strong> A $20\text{ mm} \times 5\text{ mm}$ overlap at $20\text{ MPa}$ shear yields $2.0\text{ kN}$ load—operating in the sweet spot ($40\%$) of standard $5.0\text{ kN}$ Instron load cells.</li>
+                    <li><strong>Load Cell Optimization:</strong> A $20\text{ mm} \times 5\text{ mm}$ overlap at $15\text{ MPa}$ shear yields $1.5\text{ kN}$ load—operating in the sweet spot ($30\%$) of standard $5.0\text{ kN}$ Instron load cells.</li>
                 </ul>
             </section>
 
@@ -1019,10 +1019,10 @@
                     <!-- Input Controls Grid -->
                     <div class="calc-grid">
                         <div class="input-group">
-                            <label for="input-mor">Superwood MOR (MPa) <span id="val-mor">100</span></label>
+                            <label for="input-mor">Superwood MOR (MPa) <span id="val-mor">150</span></label>
                             <div class="input-control">
-                                <input type="number" id="input-mor" value="100" min="20" max="250" step="5">
-                                <input type="range" id="range-mor" value="100" min="20" max="250" step="5">
+                                <input type="number" id="input-mor" value="150" min="20" max="250" step="5">
+                                <input type="range" id="range-mor" value="150" min="20" max="250" step="5">
                             </div>
                         </div>
 
@@ -1035,10 +1035,10 @@
                         </div>
 
                         <div class="input-group">
-                            <label for="input-tau">Adhesive Strength τ (MPa) <span id="val-tau">20.0</span></label>
+                            <label for="input-tau">Adhesive Strength τ (MPa) <span id="val-tau">15.0</span></label>
                             <div class="input-control">
-                                <input type="number" id="input-tau" value="20.0" min="1.0" max="60.0" step="1.0">
-                                <input type="range" id="range-tau" value="20.0" min="1.0" max="60.0" step="1.0">
+                                <input type="number" id="input-tau" value="15.0" min="1.0" max="60.0" step="1.0">
+                                <input type="range" id="range-tau" value="15.0" min="1.0" max="60.0" step="1.0">
                             </div>
                         </div>
 
@@ -1063,17 +1063,17 @@
                     <div class="results-panel">
                         <div class="result-card">
                             <div class="result-card-label">Absolute Max Overlap (L_max)</div>
-                            <div class="result-card-val" id="out-lmax" style="color: var(--primary);">7.50 mm</div>
+                            <div class="result-card-val" id="out-lmax" style="color: var(--primary);">15.00 mm</div>
                         </div>
 
                         <div class="result-card">
                             <div class="result-card-label">Glue Failure Force (F_glue)</div>
-                            <div class="result-card-val" id="out-force">2.00 kN</div>
+                            <div class="result-card-val" id="out-force">1.50 kN</div>
                         </div>
 
                         <div class="result-card">
                             <div class="result-card-label">Peak Wood Stress (σ_wood)</div>
-                            <div class="result-card-val" id="out-stress">66.7 MPa</div>
+                            <div class="result-card-val" id="out-stress">50.0 MPa</div>
                         </div>
                     </div>
 
@@ -1174,9 +1174,9 @@
 
         // Calculation & Simulation Engine
         function updateSimulation() {
-            const mor = parseFloat(morInput.value) || 100;
+            const mor = parseFloat(morInput.value) || 150;
             const t = parseFloat(tInput.value) || 6;
-            const tau = parseFloat(tauInput.value) || 20;
+            const tau = parseFloat(tauInput.value) || 15;
             const L = parseFloat(lInput.value) || 5;
             const w = parseFloat(wInput.value) || 20;
 
