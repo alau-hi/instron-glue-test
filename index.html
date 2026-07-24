@@ -897,13 +897,13 @@
                     </div>
                     <div class="sequence-step">
                         <div class="step-title">Overlap Length ($L$)</div>
-                        <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">5.0 mm</p>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Short overlap length controls the total shear area ($100\text{ mm}^2$) to cap ultimate failure force.</p>
+                        <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">8.0 mm</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Caps shear area ($160\text{ mm}^2$) while staying long enough that jig tolerance (±0.5 mm) is only ~6% of bond area.</p>
                     </div>
                     <div class="sequence-step">
                         <div class="step-title">Piece Length & Total Joint</div>
-                        <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">100 mm / 195 mm</p>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Standard 100 mm coupon length per piece yields a 195 mm total assembly length.</p>
+                        <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">100 mm / 192 mm</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Standard 100 mm coupon length per piece yields a 192 mm total assembly length.</p>
                     </div>
                 </div>
 
@@ -913,15 +913,15 @@
                         Worked check
                     </div>
                     <ul>
-                        <li><strong>Glue Failure Load ($F_{\text{glue}}$):</strong> $15\text{ MPa} \times (20\text{ mm} \times 5\text{ mm}) = \mathbf{1,500\text{ N (1.5 kN)}}$.</li>
-                        <li><strong>Peak SUPERWOOD Tensile Stress ($\sigma_{\text{wood}}$):</strong> $\frac{4 \times 1500\text{ N}}{20\text{ mm} \times 6\text{ mm}} = \mathbf{50.0\text{ MPa}}$.</li>
-                        <li><em>Result:</em> The adhesive shears at $1.5\text{ kN}$ while the SUPERWOOD sees a peak stress of $50.0\text{ MPa}$ — a third of its $150\text{ MPa}$ MOR.</li>
+                        <li><strong>Glue Failure Load ($F_{\text{glue}}$):</strong> $15\text{ MPa} \times (20\text{ mm} \times 8\text{ mm}) = \mathbf{2,400\text{ N (2.4 kN)}}$.</li>
+                        <li><strong>Peak SUPERWOOD Tensile Stress ($\sigma_{\text{wood}}$):</strong> $\frac{4 \times 2400\text{ N}}{20\text{ mm} \times 6\text{ mm}} = \mathbf{80.0\text{ MPa}}$.</li>
+                        <li><em>Result:</em> The adhesive shears at $2.4\text{ kN}$ while the SUPERWOOD sees a peak stress of $80.0\text{ MPa}$ — a $1.9\times$ margin under its $150\text{ MPa}$ MOR.</li>
                     </ul>
                 </div>
 
                 <div class="figure-card">
                     <div class="figure-img-container" style="padding: 16px;">
-                        <svg viewBox="0 0 660 200" width="100%" style="max-width: 640px;" role="img" aria-label="Side view of single lap shear joint: two 100 mm coupons, 5 mm overlap, 6 mm thickness, end shims, opposing tensile forces">
+                        <svg viewBox="0 0 660 200" width="100%" style="max-width: 640px;" role="img" aria-label="Side view of single lap shear joint: two 100 mm coupons, 8 mm overlap, 6 mm thickness, end shims, opposing tensile forces">
                             <!-- top adherend -->
                             <rect x="90" y="72" width="270" height="26" rx="2" fill="var(--primary)" opacity="0.85"/>
                             <!-- bottom adherend -->
@@ -942,7 +942,7 @@
                                 <line x1="612" y1="72" x2="622" y2="72"/><line x1="612" y1="98" x2="622" y2="98"/><line x1="618" y1="72" x2="618" y2="98"/>
                             </g>
                             <g font-family="Inter, sans-serif" font-size="12" fill="var(--text-main)">
-                                <text x="318" y="52">L = 5 mm</text>
+                                <text x="318" y="52">L = 8 mm</text>
                                 <text x="626" y="89">t = 6 mm</text>
                                 <text x="190" y="62">Coupon 100 mm</text>
                                 <text x="420" y="148">Coupon 100 mm</text>
@@ -967,9 +967,9 @@
                     <div class="sequence-step">
                         <div class="sequence-step-header">
                             <span class="step-title">Step 1: Bond Specimens under Perpendicular Pressure</span>
-                            <span class="step-subtitle">Maintain strict 5.0 mm overlap alignment</span>
+                            <span class="step-subtitle">Set the 8.0 mm overlap with a hard end-stop</span>
                         </div>
-                        <p>Apply adhesive evenly over the $20\text{ mm} \times 5\text{ mm}$ overlap. Secure in an alignment jig under specified curing pressure until full polymerization.</p>
+                        <p>Apply adhesive evenly over the $20\text{ mm} \times 8\text{ mm}$ overlap. Set the overlap with a machined end-stop or spacer in the bonding jig rather than by eye — at this scale a $\pm 0.5\text{ mm}$ error is ~6% of bond area. Secure under specified curing pressure until full polymerization, then after cure measure each specimen's actual overlap with calipers and record it: the strength calculation uses measured area, not nominal.</p>
                     </div>
 
                     <div class="sequence-step">
@@ -1027,7 +1027,7 @@
                             <g font-family="Inter, sans-serif" font-size="12" fill="var(--text-main)">
                                 <text x="248" y="34">Upper wedge grip</text>
                                 <text x="248" y="70">6 mm shim</text>
-                                <text x="14" y="174">5 mm overlap</text>
+                                <text x="14" y="174">8 mm overlap</text>
                                 <text x="248" y="278">6 mm shim</text>
                                 <text x="248" y="316">Lower wedge grip</text>
                                 <text x="188" y="18">Load axis</text>
@@ -1046,7 +1046,7 @@
                 <ol>
                     <li><strong>Quasi-Static Displacement Rate:</strong> Set crosshead speed to <strong>1.27 mm/min</strong> ($0.05\text{ in/min}$) per ASTM D1002. This quasi-static rate avoids strain-rate effects in both adhesive and substrate.</li>
                     <li><strong>Data Acquisition Rate:</strong> Sample Force (N) and Crosshead Extension (mm) at a minimum frequency of <strong>50 Hz</strong>.</li>
-                    <li><strong>Shear Strength Calculation:</strong> Compute ultimate apparent shear strength ($\tau_{\text{app}}$) by dividing peak load ($F_{\text{peak}}$) by measured bond area ($A = w \cdot L$):
+                    <li><strong>Shear Strength Calculation:</strong> Compute ultimate apparent shear strength ($\tau_{\text{app}}$) by dividing peak load ($F_{\text{peak}}$) by the bond area measured on that specimen after cure ($A = w \cdot L_{\text{measured}}$), so jig tolerance becomes bookkeeping rather than scatter:
                         $$\tau_{\text{app}} = \frac{F_{\text{peak}}}{w \cdot L}$$
                     </li>
                 </ol>
@@ -1121,7 +1121,8 @@
                 <h3>Why 20.0 mm Width is Optimal</h3>
                 <ul>
                     <li><strong>Edge Effect Isolation:</strong> Narrower coupons ($< 10\text{ mm}$) amplify edge defects and glue squeeze-out fillet artifacts, causing data scatter. 20 mm yields a uniform center stress field.</li>
-                    <li><strong>Load Cell Optimization:</strong> A $20\text{ mm} \times 5\text{ mm}$ overlap at $15\text{ MPa}$ shear yields $1.5\text{ kN}$ load—about $30\%$ of a standard $5.0\text{ kN}$ Instron load cell, comfortably within its accurate range.</li>
+                    <li><strong>Load Cell Optimization:</strong> A $20\text{ mm} \times 8\text{ mm}$ overlap at $15\text{ MPa}$ shear yields $2.4\text{ kN}$ load—about $48\%$ of a standard $5.0\text{ kN}$ Instron load cell, comfortably within its accurate range.</li>
+                    <li><strong>Overlap Precision:</strong> Width cannot ease the overlap constraint — $w$ cancels from substrate stress — so overlap length is chosen directly for fabrication tolerance. At $8\text{ mm}$, a $\pm 0.5\text{ mm}$ jig error is ~6% of bond area (vs. ±10% at $5\text{ mm}$), while substrate stress stays at $80\text{ MPa}$, a $1.9\times$ margin under MOR.</li>
                 </ul>
             </section>
 
@@ -1174,11 +1175,11 @@
                                 <div class="ctrl-top">
                                     <label for="input-l">Overlap Length (L)</label>
                                     <div class="val-unit-box">
-                                        <input type="number" id="input-l" value="5.0" min="1.0" max="25.0" step="0.5">
+                                        <input type="number" id="input-l" value="8.0" min="1.0" max="25.0" step="0.5">
                                         <span>mm</span>
                                     </div>
                                 </div>
-                                <input type="range" id="range-l" value="5.0" min="1.0" max="25.0" step="0.5" class="slider-bar">
+                                <input type="range" id="range-l" value="8.0" min="1.0" max="25.0" step="0.5" class="slider-bar">
                             </div>
 
                             <div class="ctrl-compact-row">
@@ -1198,12 +1199,12 @@
                             <!-- Output Results -->
                             <div class="studio-results">
                                 <div class="res-row"><span>Max safe overlap at these MOR, t, τ (L<sub>max</sub> = MOR·t / 4τ)</span><strong id="out-lmax">15.00 mm</strong></div>
-                                <div class="res-row"><span>Load at glue failure (F<sub>glue</sub> = τ·w·L)</span><strong id="out-force">1.50 kN</strong></div>
-                                <div class="res-row"><span>Peak substrate stress (σ<sub>wood</sub> = 4τL/t)</span><strong id="out-stress">50.0 MPa</strong></div>
+                                <div class="res-row"><span>Load at glue failure (F<sub>glue</sub> = τ·w·L)</span><strong id="out-force">2.40 kN</strong></div>
+                                <div class="res-row"><span>Peak substrate stress (σ<sub>wood</sub> = 4τL/t)</span><strong id="out-stress">80.0 MPa</strong></div>
                             </div>
 
                             <div id="safety-badge" class="status-badge status-pass" style="margin-bottom: 0;">
-                                PASS — wood stress 50.0 MPa is below 80% of MOR (150 MPa)
+                                PASS — wood stress 80.0 MPa is below 80% of MOR (150 MPa)
                             </div>
                             <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">PASS requires σ<sub>wood</sub> under 80% of MOR — a 1.25× margin so the bond fails before the substrate does.</p>
 
@@ -1310,7 +1311,7 @@
             const mor = parseFloat(morInput.value) || 150;
             const t = parseFloat(tInput.value) || 6;
             const tau = parseFloat(tauInput.value) || 15;
-            const L = parseFloat(lInput.value) || 5;
+            const L = parseFloat(lInput.value) || 8;
             const w = parseFloat(wInput.value) || 20;
 
             // Formulas:
