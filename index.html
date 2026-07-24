@@ -1468,20 +1468,28 @@
             ctx.fillRect(x1 - shimW, cy - woodThickness, shimW, woodThickness);
 
             // Tensile Load Vectors (Arrows)
-            ctx.strokeStyle = isDark ? '#38bdf8' : '#0369a1';
+            const arrowCol = isDark ? '#38bdf8' : '#0369a1';
+            ctx.strokeStyle = arrowCol;
+            ctx.fillStyle = arrowCol;
             ctx.lineWidth = 3;
 
-            // Left Pull Arrow
-            ctx.beginPath();
-            ctx.moveTo(x0 - 8, cy - woodThickness / 2);
-            ctx.lineTo(x0 - 36, cy - woodThickness / 2);
-            ctx.stroke();
+            function drawArrow(fromX, toX, y) {
+                const dir = Math.sign(toX - fromX);
+                ctx.beginPath();
+                ctx.moveTo(fromX, y);
+                ctx.lineTo(toX - dir * 8, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(toX, y);
+                ctx.lineTo(toX - dir * 9, y - 5);
+                ctx.lineTo(toX - dir * 9, y + 5);
+                ctx.closePath();
+                ctx.fill();
+            }
 
-            // Right Pull Arrow
-            ctx.beginPath();
-            ctx.moveTo(x1 + 8, cy + woodThickness / 2);
-            ctx.lineTo(x1 + 36, cy + woodThickness / 2);
-            ctx.stroke();
+            // Left Pull Arrow (points left) and Right Pull Arrow (points right)
+            drawArrow(x0 - 8, x0 - 38, cy - woodThickness / 2);
+            drawArrow(x1 + 8, x1 + 38, cy + woodThickness / 2);
 
             // Labels (kept inside the canvas: F above/below the arrows)
             ctx.font = '12px Inter, sans-serif';
