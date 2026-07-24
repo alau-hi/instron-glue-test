@@ -786,6 +786,49 @@
             color: var(--text-muted);
         }
 
+        /* Why? parameter-logic popovers */
+        .why-btn {
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            border-radius: 20px;
+            padding: 1px 8px;
+            cursor: pointer;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        .why-btn:hover, .why-btn:focus-visible {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        [popover].why-pop {
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: 18px 22px;
+            max-width: 380px;
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        [popover].why-pop::backdrop {
+            background: rgba(15, 23, 42, 0.35);
+        }
+
+        [popover].why-pop h4 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+        }
+
         /* Footer */
         footer {
             margin-top: auto;
@@ -799,7 +842,7 @@
 
         /* Print Styles */
         @media print {
-            .sidebar, .top-header, .btn-icon, .btn-primary, #studio { display: none !important; }
+            .sidebar, .top-header, .btn-icon, .btn-primary, #studio, .why-btn { display: none !important; }
             .content { margin-left: 0 !important; padding: 0 !important; max-width: 100% !important; }
             body { background: #ffffff !important; color: #000000 !important; }
             .calc-studio, .callout, .sequence-step { break-inside: avoid; border: 1px solid #ccc !important; }
@@ -884,24 +927,50 @@
 
                 <p>To maintain $\sigma_{\text{wood}}$ safely below 150 MPa while generating sufficient force to shear the <strong>15 MPa adhesive</strong>, use these dimensions:</p>
                 
+                <!-- Parameter-logic popovers (shared by Section 1 cards and Studio controls) -->
+                <div popover id="why-t" class="why-pop">
+                    <h4>Why 6 mm thickness?</h4>
+                    <p style="margin-bottom:0;">Substrate stress scales as $L/t$, so thickness directly buys overlap headroom: $L_{\text{max}} = \text{MOR} \cdot t \,/\, 4\tau$ doubles if $t$ doubles. 6 mm keeps the wood at 80 MPa under the 2.4 kN failure load, gives the coupon enough bending stiffness to resist out-of-plane peel, and lets grip shims be cut from the same sheet stock so they cannot compress differently than the specimen.</p>
+                </div>
+                <div popover id="why-w" class="why-pop">
+                    <h4>Why 20 mm width?</h4>
+                    <p style="margin-bottom:0;">Width cancels out of substrate stress ($\sigma_{\text{wood}} = 4\tau L/t$), so it cannot change which part fails first — it is chosen on practical grounds. 20 mm fits standard 25 mm Instron wedge grips, keeps edge defects and squeeze-out fillets a small fraction of bond area, and scales the failure force to about half of a 5 kN load cell.</p>
+                </div>
+                <div popover id="why-l" class="why-pop">
+                    <h4>Why 8 mm overlap?</h4>
+                    <p style="margin-bottom:0;">Overlap is the one lever that decides which part fails first: substrate stress is $4\tau L/t$, giving $L_{\text{max}} = 15$ mm at these defaults. 8 mm holds a $1.9\times$ margin so the glue always breaks before the wood, while staying long enough that a $\pm 0.5$ mm bonding-jig error is only ~6% of bond area (it would be $\pm 10\%$ at 5 mm). Longer overlaps also concentrate shear at the overlap ends, understating adhesive strength.</p>
+                </div>
+                <div popover id="why-len" class="why-pop">
+                    <h4>Why 100 mm coupons?</h4>
+                    <p style="margin-bottom:0;">Each coupon needs enough length for the wedge grips to clamp fully at one end plus free length between grip and joint so grip stresses die out before the bondline. 100 mm covers both with margin and is a convenient standard cut; two coupons minus the 8 mm overlap give the 192 mm assembly.</p>
+                </div>
+                <div popover id="why-mor" class="why-pop">
+                    <h4>Why MOR 150 MPa?</h4>
+                    <p style="margin-bottom:0;">150 MPa is the modulus of rupture for SUPERWOOD. MOR — a flexural strength — is the right substrate limit because the offset joint loads each adherend in combined tension and bending, which is closer to a flexure test than a pure tension test. If your batch data differs, adjust it here: $L_{\text{max}}$ scales linearly with MOR.</p>
+                </div>
+                <div popover id="why-tau" class="why-pop">
+                    <h4>Why glue strength 15 MPa?</h4>
+                    <p style="margin-bottom:0;">15 MPa is the expected shear strength of the adhesive under test — the quantity the experiment measures. It sets the design point, not a result: enter your adhesive's datasheet value and check the badge, since $L_{\text{max}}$ shrinks inversely with $\tau$ (a 30 MPa adhesive halves it to 7.5 mm).</p>
+                </div>
+
                 <div class="grid-2col">
                     <div class="sequence-step">
-                        <div class="step-title">Wood Thickness ($t$)</div>
+                        <div class="step-title">Wood Thickness ($t$) <button class="why-btn" popovertarget="why-t">why?</button></div>
                         <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">6.0 mm</p>
                         <p style="font-size: 0.9rem; color: var(--text-muted);">Provides structural section stiffness to resist out-of-plane peel bending.</p>
                     </div>
                     <div class="sequence-step">
-                        <div class="step-title">Specimen Width ($w$)</div>
+                        <div class="step-title">Specimen Width ($w$) <button class="why-btn" popovertarget="why-w">why?</button></div>
                         <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">20.0 mm</p>
                         <p style="font-size: 0.9rem; color: var(--text-muted);">Optimal for standard 25 mm Instron mechanical wedge grips and edge defect mitigation.</p>
                     </div>
                     <div class="sequence-step">
-                        <div class="step-title">Overlap Length ($L$)</div>
+                        <div class="step-title">Overlap Length ($L$) <button class="why-btn" popovertarget="why-l">why?</button></div>
                         <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">8.0 mm</p>
                         <p style="font-size: 0.9rem; color: var(--text-muted);">Caps shear area ($160\text{ mm}^2$) while staying long enough that jig tolerance (±0.5 mm) is only ~6% of bond area.</p>
                     </div>
                     <div class="sequence-step">
-                        <div class="step-title">Piece Length & Total Joint</div>
+                        <div class="step-title">Piece Length & Total Joint <button class="why-btn" popovertarget="why-len">why?</button></div>
                         <p style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--primary);">100 mm / 192 mm</p>
                         <p style="font-size: 0.9rem; color: var(--text-muted);">Standard 100 mm coupon length per piece yields a 192 mm total assembly length.</p>
                     </div>
@@ -1140,7 +1209,7 @@
 
                             <div class="ctrl-compact-row">
                                 <div class="ctrl-top">
-                                    <label for="input-mor">SUPERWOOD MOR</label>
+                                    <label for="input-mor">SUPERWOOD MOR <button class="why-btn" popovertarget="why-mor">?</button></label>
                                     <div class="val-unit-box">
                                         <input type="number" id="input-mor" value="150" min="20" max="250" step="5">
                                         <span>MPa</span>
@@ -1151,7 +1220,7 @@
 
                             <div class="ctrl-compact-row">
                                 <div class="ctrl-top">
-                                    <label for="input-t">Thickness (t)</label>
+                                    <label for="input-t">Thickness (t) <button class="why-btn" popovertarget="why-t">?</button></label>
                                     <div class="val-unit-box">
                                         <input type="number" id="input-t" value="6.0" min="1.0" max="20.0" step="0.5">
                                         <span>mm</span>
@@ -1162,7 +1231,7 @@
 
                             <div class="ctrl-compact-row">
                                 <div class="ctrl-top">
-                                    <label for="input-tau">Glue Strength (τ)</label>
+                                    <label for="input-tau">Glue Strength (τ) <button class="why-btn" popovertarget="why-tau">?</button></label>
                                     <div class="val-unit-box">
                                         <input type="number" id="input-tau" value="15.0" min="1.0" max="60.0" step="1.0">
                                         <span>MPa</span>
@@ -1173,7 +1242,7 @@
 
                             <div class="ctrl-compact-row">
                                 <div class="ctrl-top">
-                                    <label for="input-l">Overlap Length (L)</label>
+                                    <label for="input-l">Overlap Length (L) <button class="why-btn" popovertarget="why-l">?</button></label>
                                     <div class="val-unit-box">
                                         <input type="number" id="input-l" value="8.0" min="1.0" max="25.0" step="0.5">
                                         <span>mm</span>
@@ -1184,7 +1253,7 @@
 
                             <div class="ctrl-compact-row">
                                 <div class="ctrl-top">
-                                    <label for="input-w">Coupon Width (w)</label>
+                                    <label for="input-w">Coupon Width (w) <button class="why-btn" popovertarget="why-w">?</button></label>
                                     <div class="val-unit-box">
                                         <input type="number" id="input-w" value="20.0" min="5.0" max="50.0" step="1.0">
                                         <span>mm</span>
