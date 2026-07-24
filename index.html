@@ -818,9 +818,6 @@
             line-height: 1.55;
         }
 
-        [popover].why-pop::backdrop {
-            background: rgba(15, 23, 42, 0.35);
-        }
 
         [popover].why-pop h4 {
             font-family: var(--font-heading);
@@ -1363,15 +1360,37 @@
         sidebar.querySelectorAll('a').forEach(a =>
             a.addEventListener('click', () => sidebar.classList.remove('mobile-open')));
 
-        // Why-buttons: open popover on hover; a click still pins it open (hover-out then only closes hover-opened ones)
+        // Why-buttons: open popover on hover, anchored next to the triggering button;
+        // a click still pins it open (hover-out only closes hover-opened ones)
+        function placePopover(pop, btn) {
+            const r = btn.getBoundingClientRect();
+            pop.style.margin = '0';
+            const pw = pop.offsetWidth, ph = pop.offsetHeight;
+            const left = Math.min(Math.max(8, r.left), window.innerWidth - pw - 8);
+            let top = r.bottom + 8;
+            if (top + ph > window.innerHeight - 8) top = Math.max(8, r.top - ph - 8);
+            pop.style.left = left + 'px';
+            pop.style.top = top + 'px';
+        }
+
         document.querySelectorAll('.why-btn').forEach(btn => {
             const pop = document.getElementById(btn.getAttribute('popovertarget'));
             if (!pop) return;
             let timer = null;
             let hoverOpened = false;
+            // Shared popovers anchor to whichever button opened them. Placement runs directly
+            // after opening (showPopover is sync; the 'toggle' event is async and throttled in
+            // background tabs). For native invoker clicks, place on the next task.
+            btn.addEventListener('click', () => {
+                setTimeout(() => { if (pop.matches(':popover-open')) placePopover(pop, btn); }, 0);
+            });
             btn.addEventListener('mouseenter', () => {
                 if (pop.matches(':popover-open')) return;
-                timer = setTimeout(() => { pop.showPopover(); hoverOpened = true; }, 150);
+                timer = setTimeout(() => {
+                    pop.showPopover();
+                    placePopover(pop, btn);
+                    hoverOpened = true;
+                }, 150);
             });
             btn.addEventListener('mouseleave', () => {
                 clearTimeout(timer);
