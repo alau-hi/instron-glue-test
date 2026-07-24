@@ -515,15 +515,11 @@
 
         .calc-grid-5col {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 12px;
             margin-bottom: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .calc-grid-5col {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            }
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .slider-card {
@@ -533,7 +529,9 @@
             padding: 10px 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
+            min-width: 0;
+            box-sizing: border-box;
         }
 
         .slider-header {
@@ -541,22 +539,26 @@
             justify-content: space-between;
             align-items: center;
             gap: 4px;
+            width: 100%;
         }
 
         .slider-header label {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--text-heading);
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
         }
 
         .num-input {
-            width: 62px;
-            padding: 3px 4px;
+            width: 58px;
+            flex-shrink: 0;
+            padding: 2px 4px;
             border: 1px solid var(--border-color);
             border-radius: 4px;
             font-family: var(--font-mono);
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-align: right;
             background: var(--bg-surface);
@@ -1115,7 +1117,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </section>
         </main>
