@@ -250,7 +250,8 @@
             justify-content: space-between;
             padding: 10px 14px;
             border-radius: var(--radius-md);
-            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .sidebar a:hover {
@@ -262,7 +263,9 @@
             background-color: var(--primary-light);
             color: var(--primary);
             font-weight: 600;
-            border: 1px solid var(--primary-border);
+            border-color: var(--primary-border);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
         }
 
         .step-num {
@@ -272,6 +275,7 @@
             padding: 2px 6px;
             border-radius: 4px;
             color: var(--text-muted);
+            transition: all 0.2s ease;
         }
 
         .sidebar a.active .step-num {
@@ -1462,6 +1466,34 @@
             }
         });
 
+        // Intersection Observer for Active Sidebar Highlight & Scroll Spy
+        function initScrollSpy() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-15% 0px -55% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        }
+
         // Initialize KaTeX & Interactivity on DOM Load
         document.addEventListener('DOMContentLoaded', () => {
             if (window.renderMathInElement) {
@@ -1474,6 +1506,7 @@
             }
             initChart();
             updateSimulation();
+            initScrollSpy();
             window.addEventListener('resize', updateSimulation);
         });
     </script>
