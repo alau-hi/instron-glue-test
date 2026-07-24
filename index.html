@@ -1363,6 +1363,23 @@
         sidebar.querySelectorAll('a').forEach(a =>
             a.addEventListener('click', () => sidebar.classList.remove('mobile-open')));
 
+        // Why-buttons: open popover on hover; a click still pins it open (hover-out then only closes hover-opened ones)
+        document.querySelectorAll('.why-btn').forEach(btn => {
+            const pop = document.getElementById(btn.getAttribute('popovertarget'));
+            if (!pop) return;
+            let timer = null;
+            let hoverOpened = false;
+            btn.addEventListener('mouseenter', () => {
+                if (pop.matches(':popover-open')) return;
+                timer = setTimeout(() => { pop.showPopover(); hoverOpened = true; }, 150);
+            });
+            btn.addEventListener('mouseleave', () => {
+                clearTimeout(timer);
+                if (hoverOpened && pop.matches(':popover-open')) pop.hidePopover();
+                hoverOpened = false;
+            });
+        });
+
         // Sync inputs & ranges (write only to the paired control, never back into the one being edited)
         function bindInputPair(input, range) {
             input.addEventListener('input', () => { range.value = input.value; updateSimulation(); });
